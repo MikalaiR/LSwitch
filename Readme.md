@@ -7,4 +7,4 @@ Use any key to switch input languages, usage: lswitch [keycode] [keycode for dis
 
 # Build #
 ## MingW ##
-- gcc -Wall -O2 -fno-ident -fomit-frame-pointer -fno-exceptions -fno-asynchronous-unwind-tables -flto -s lswitch.c -nostdlib -lkernel32 -luser32 -lshell32 -lmsvcrt -Wl,-exMain
+- gcc -Wall -O2 -fno-ident -fomit-frame-pointer -fno-exceptions -fno-asynchronous-unwind-tables -flto -s lswitch.c -nostdlib -lkernel32 -luser32 -lshell32 -lmsvcrt -Wl,-exMain -mwindows
