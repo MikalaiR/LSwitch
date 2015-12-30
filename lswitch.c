@@ -41,7 +41,6 @@ LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam)
 			return 1;
 		}
 	}
-skip:
 	return CallNextHookEx(g_khook, nCode, wParam, lParam);
 }
 
