@@ -10,9 +10,9 @@ UINT    g_disableKey = VK_LMENU;
 
 LRESULT CALLBACK KeyboardHook(int nCode, WPARAM wParam, LPARAM lParam) 
 {
-	if(nCode < 0)
+	if (nCode < 0)
 		return CallNextHookEx(g_hHook, nCode, wParam, lParam);
-	if(nCode == HC_ACTION) 
+	if (nCode == HC_ACTION) 
 	{
 		KBDLLHOOKSTRUCT *ks = (KBDLLHOOKSTRUCT*)lParam;
 		if (ks->vkCode == g_key && !(GetKeyState(g_disableKey) & 0x8000)) 
@@ -36,11 +36,11 @@ LRESULT CALLBACK KeyboardHook(int nCode, WPARAM wParam, LPARAM lParam)
 
 void failed(const TCHAR *msg) 
 {
-	MessageBox(NULL, msg, _T("Error"), MB_OK|MB_ICONERROR);
+	MessageBox(NULL, msg, _T("Error"), MB_OK | MB_ICONERROR);
 	ExitProcess(1);
 }
 
-void CALLBACK TimerCallback(HWND hWnd,UINT uMsg,UINT_PTR idEvent,DWORD dwTime)
+void CALLBACK TimerCallback(HWND hWnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime)
 {
 	if (WaitForSingleObject(g_hEvent, 0) == WAIT_OBJECT_0)
 		PostQuitMessage(0);
@@ -48,9 +48,9 @@ void CALLBACK TimerCallback(HWND hWnd,UINT uMsg,UINT_PTR idEvent,DWORD dwTime)
 
 void xMain(int argc, wchar_t **argv) 
 {
-	MSG     msg;
-	int     cmdKey = 0;
-	UINT    disableKey = 0;
+	MSG  msg;
+	UINT cmdKey = 0;
+	UINT disableKey = 0;
 
 	argv = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (argv != NULL && argc >= 2) 
