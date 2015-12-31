@@ -1,21 +1,18 @@
 #define _WIN32_WINNT 0x500
-
 #include <windows.h>
 #include <tchar.h>
 
 HHOOK	g_hHook;
 HANDLE  g_hEvent;
-UINT	g_key = VK_CAPITAL;
-UINT    g_disableKey = VK_LMENU;
+UINT	g_uKey = VK_CAPITAL;
+UINT    g_uDisableKey = VK_LMENU;
 
 LRESULT CALLBACK KeyboardHook(int nCode, WPARAM wParam, LPARAM lParam) 
 {
-	if (nCode < 0)
-		return CallNextHookEx(g_hHook, nCode, wParam, lParam);
 	if (nCode == HC_ACTION) 
 	{
 		KBDLLHOOKSTRUCT *ks = (KBDLLHOOKSTRUCT*)lParam;
-		if (ks->vkCode == g_key && !(GetKeyState(g_disableKey) & 0x8000)) 
+		if (ks->vkCode == g_uKey && !(GetKeyState(g_uDisableKey) & 0x8000)) 
 		{
 			if(wParam == WM_KEYDOWN) 
 			{
@@ -48,22 +45,20 @@ void CALLBACK TimerCallback(HWND hWnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime
 
 void xMain(int argc, wchar_t **argv) 
 {
-	MSG  msg;
-	UINT cmdKey = 0;
-	UINT disableKey = 0;
+	MSG msg;
 
 	argv = CommandLineToArgvW(GetCommandLineW(), &argc);
 	if (argv != NULL && argc >= 2) 
 	{
-		cmdKey = _wtoi(argv[1]);
-		if (cmdKey >= 0x01 && cmdKey <= 0xFE)
-			g_key = cmdKey;
+		UINT uCmdKey = _wtoi(argv[1]);
+		if (uCmdKey >= 0x01 && uCmdKey <= 0xFE)
+			g_uKey = uCmdKey;
 
 		if (argc >= 3)
 		{
-			disableKey = _wtoi(argv[2]);
-			if (disableKey >= 0x01 && disableKey <= 0xFE)
-				g_disableKey = disableKey;
+			UINT uDisableKey = _wtoi(argv[2]);
+			if (uDisableKey >= 0x01 && uDisableKey <= 0xFE)
+				g_uDisableKey = uDisableKey;
 		}
 	}
 	LocalFree(argv);
